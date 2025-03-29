@@ -1,0 +1,500 @@
+/* --- Variables & Reset --- */
+:root {
+    --primary-color: #00ADB5; /* Teal Aqua */
+    --primary-color-dark: #007A7F;
+    --secondary-color: #78909c; /* Blue Grey */
+    --success-color: #4CAF50; /* Green */
+    --success-color-light: #e8f5e9;
+    --danger-color: #f44336; /* Red */
+    --danger-color-light: #ffebee;
+    --light-bg: #f9f9f9; /* Very Light Grey */
+    --white-color: #ffffff;
+    --text-color: #37474f; /* Dark Blue Grey */
+    --border-color: #e0e0e0;
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --border-radius: 12px; /* Softer corners */
+    --outer-shadow: 6px 6px 12px #d9d9d9, -6px -6px 12px #ffffff;
+    --inner-shadow: inset 4px 4px 8px #d9d9d9, inset -4px -4px 8px #ffffff;
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px; /* Base font size */
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: var(--light-bg);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+}
+
+.container {
+    background-color: var(--light-bg); /* Match body bg for neumorphic effect */
+    border-radius: calc(var(--border-radius) * 1.5); /* Slightly larger radius */
+    box-shadow: var(--outer-shadow);
+    padding: 2.5rem 3rem;
+    width: 100%;
+    max-width: 650px;
+    margin: auto;
+    transition: box-shadow var(--transition-speed) ease;
+}
+
+/* --- Header & Footer --- */
+.main-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.main-header h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.main-header p {
+    color: var(--secondary-color);
+    font-size: 1rem;
+}
+
+.main-footer {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 0.85em;
+    color: var(--secondary-color);
+    padding-top: 1.5rem;
+}
+
+/* --- Core Sections (Display toggled by JS) --- */
+.upload-area,
+.progress-area,
+.result-area,
+.error-area {
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    background-color: var(--light-bg); /* Consistent background */
+    margin-top: 2rem;
+    transition: all var(--transition-speed) ease;
+}
+
+/* --- Initial Upload Area --- */
+.upload-area {
+    text-align: center;
+    cursor: pointer;
+    border: 2px dashed transparent; /* Hidden border, appears on drag */
+    transition: border-color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+    box-shadow: var(--inner-shadow); /* Soft inner shadow for depth */
+    padding: 3rem 2rem;
+}
+
+.upload-area.dragover {
+    border-color: var(--primary-color);
+    background-color: #eff9fa; /* Slight tint */
+    box-shadow: none; /* Flatten on dragover */
+}
+
+.upload-icon {
+    width: 60px;
+    height: 60px;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    stroke-width: 1; /* Thinner stroke */
+}
+
+.upload-text h2 {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.upload-text p {
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+}
+
+/* --- Buttons --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+    font-weight: 600; /* Bolder buttons */
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: var(--light-bg); /* Match background */
+    color: var(--primary-color); /* Default text color */
+    box-shadow: 4px 4px 8px #c8c8c8, -4px -4px 8px #ffffff; /* Neumorphic button shadow */
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: var(--inner-shadow); /* Sunken look when disabled */
+    color: var(--secondary-color);
+}
+
+.btn:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 12px #c1c1c1, -6px -6px 12px #ffffff; /* Enhanced shadow on hover */
+    color: var(--primary-color-dark);
+}
+
+.btn:not(:disabled):active {
+     transform: translateY(0px);
+     box-shadow: var(--inner-shadow); /* Press effect */
+     color: var(--primary-color-dark);
+}
+
+.btn-primary { /* Main action button style */
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    box-shadow: 4px 4px 8px rgba(0, 173, 181, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.7);
+}
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--primary-color-dark);
+    box-shadow: 6px 6px 12px rgba(0, 173, 181, 0.4), -6px -6px 12px rgba(255, 255, 255, 0.8);
+}
+.btn-primary:active:not(:disabled) {
+    box-shadow: inset 3px 3px 6px rgba(0, 122, 127, 0.4), inset -3px -3px 6px rgba(0, 224, 235, 0.6);
+}
+
+
+.btn-success { /* Actually upload button */
+    background-color: var(--success-color);
+    color: var(--white-color);
+    box-shadow: 4px 4px 8px rgba(76, 175, 80, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.7);
+}
+.btn-success:hover:not(:disabled) { background-color: #388e3c; }
+.btn-success:active:not(:disabled) { box-shadow: inset 3px 3px 6px rgba(56, 142, 60, 0.4), inset -3px -3px 6px rgba(102, 187, 106, 0.6); }
+
+.btn-secondary { /* E.g., Copy button */
+    color: var(--secondary-color);
+    /* Uses default btn neumorphic shadow */
+}
+.btn-secondary:hover:not(:disabled) { color: #546e7a; }
+
+.btn-danger { /* E.g., Remove button - maybe use icon only */
+    background-color: var(--danger-color);
+    color: var(--white-color);
+    box-shadow: 4px 4px 8px rgba(244, 67, 54, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.7);
+}
+.btn-danger:hover:not(:disabled) { background-color: #d32f2f; }
+
+
+/* --- File Preview Area --- */
+.file-preview {
+    margin-top: 2rem;
+    text-align: left;
+}
+.file-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.file-preview-header h3 {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--text-color);
+}
+.file-info {
+    font-size: 0.9em;
+    color: var(--secondary-color);
+}
+.file-list {
+    list-style: none;
+    max-height: 250px; /* Increased height */
+    overflow-y: auto;
+    padding-right: 8px; /* Space for scrollbar */
+}
+
+/* File Card Styling */
+.file-card {
+    display: flex;
+    align-items: center;
+    background-color: var(--white-color); /* White cards */
+    padding: 0.8rem 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 0.8rem;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05), -2px -2px 5px rgba(255, 255, 255, 0.7); /* Subtle card shadow */
+    transition: box-shadow var(--transition-speed) ease;
+}
+.file-card:hover {
+     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.08), -3px -3px 6px rgba(255, 255, 255, 0.8);
+}
+
+.file-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 1rem;
+    flex-shrink: 0;
+    /* Placeholder - JS would set background-image or use SVG icons */
+    background-color: var(--border-color);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-color);
+    font-size: 0.8em;
+    font-weight: bold;
+}
+.file-details {
+    flex-grow: 1;
+    overflow: hidden; /* Prevent long names breaking layout */
+}
+.file-name {
+    display: block; /* Ensure it takes full width */
+    font-size: 0.95em;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-color);
+    margin-bottom: 0.1rem;
+}
+.file-size {
+    font-size: 0.85em;
+    color: var(--secondary-color);
+}
+.remove-file-btn {
+    background: none;
+    border: none;
+    color: var(--danger-color);
+    cursor: pointer;
+    font-size: 1.3em; /* Make icon bigger */
+    padding: 0.3rem;
+    margin-left: 1rem;
+    line-height: 1;
+    transition: color var(--transition-speed) ease;
+    flex-shrink: 0;
+}
+.remove-file-btn:hover { color: #c62828; } /* Darker red */
+
+.upload-action-area {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* --- Progress Area --- */
+.progress-area {
+    text-align: center;
+    box-shadow: var(--inner-shadow);
+}
+.progress-area h3 {
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+.progress-bar-container {
+    background-color: var(--border-color);
+    border-radius: 20px; /* Pill shape */
+    height: 12px;
+    overflow: hidden;
+    margin: 1.5rem 0 0.8rem;
+    box-shadow: var(--inner-shadow); /* Inner shadow for depth */
+}
+.progress-bar {
+    background-color: var(--success-color);
+    height: 100%;
+    width: 0%;
+    border-radius: 20px;
+    transition: width 0.3s ease-out;
+}
+.progress-info {
+    font-weight: 600;
+    color: var(--success-color);
+    margin-bottom: 0.5rem;
+}
+.upload-status {
+    font-size: 0.9em;
+    color: var(--secondary-color);
+}
+
+/* --- Result Area --- */
+.result-area {
+    text-align: center;
+    background-color: var(--success-color-light); /* Light green bg */
+    border: 1px solid rgba(76, 175, 80, 0.3); /* Subtle border */
+    box-shadow: none; /* Flat appearance */
+}
+.result-area .status-icon {
+    width: 50px;
+    height: 50px;
+    color: var(--success-color);
+    margin-bottom: 1rem;
+}
+.result-area h3 {
+    color: var(--success-color);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+.result-area p {
+    margin-bottom: 0.8rem;
+    color: var(--text-color);
+}
+
+/* --- Error Area --- */
+.error-area {
+    text-align: center;
+    background-color: var(--danger-color-light); /* Light red bg */
+    border: 1px solid rgba(244, 67, 54, 0.3); /* Subtle border */
+    box-shadow: none; /* Flat appearance */
+}
+.error-area .status-icon {
+    width: 50px;
+    height: 50px;
+    color: var(--danger-color);
+    margin-bottom: 1rem;
+}
+.error-area h3 {
+    color: var(--danger-color);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+#error-message {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    word-break: break-word;
+}
+
+/* Link Input & Copy Button */
+.link-container {
+    display: flex;
+    margin: 1.5rem 0;
+    border-radius: var(--border-radius);
+    box-shadow: var(--inner-shadow);
+    overflow: hidden; /* Clip button corner */
+}
+.link-input {
+    flex-grow: 1;
+    padding: 0.8rem 1rem;
+    border: none;
+    font-size: 1em;
+    background-color: var(--white-color); /* White input field */
+    color: var(--text-color);
+    outline: none;
+}
+.btn-copy {
+    padding: 0.8rem 1.2rem; /* Match input padding */
+    border-radius: 0 var(--border-radius) var(--border-radius) 0; /* Round right corners only */
+    box-shadow: none; /* Remove individual shadow */
+    margin-left: -2px; /* Overlap slightly */
+    background-color: var(--secondary-color); /* Use secondary color */
+    color: var(--white-color);
+}
+.btn-copy svg {
+    margin-right: 0.5em;
+    vertical-align: middle;
+    fill: currentColor;
+    width: 1em;
+    height: 1em;
+}
+.btn-copy:hover {
+    background-color: #546e7a;
+    color: var(--white-color); /* Ensure text stays white */
+}
+.btn-copy .copy-text.copied {
+    color: var(--success-color); /* Feedback on copy */
+    font-weight: bold;
+}
+
+.expiration-info {
+    font-size: 0.9em;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+}
+#transfer-again-button, #retry-button {
+    margin-top: 1.5rem;
+}
+
+/* --- Spinner --- */
+.spinner {
+    display: inline-block;
+    width: 1.2em; /* Slightly larger */
+    height: 1.2em;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--white-color);
+    animation: spin 1s ease-in-out infinite;
+    margin-left: 0.7em;
+    vertical-align: middle; /* Align better with text */
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 2rem 1.5rem;
+    }
+    .upload-area {
+        padding: 2rem 1rem;
+    }
+    .btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.95rem;
+    }
+     .file-list {
+        max-height: 200px; /* Adjust height on smaller screens */
+    }
+    .file-card {
+        padding: 0.6rem 0.8rem;
+    }
+    .file-icon {
+        width: 28px;
+        height: 28px;
+        margin-right: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+     body { padding: 1rem 0.5rem; }
+     .container { padding: 1.5rem 1rem; box-shadow: none; } /* Remove outer shadow on small screens */
+     .main-header h1 { font-size: 1.6em; }
+     .main-header p { font-size: 0.9rem; }
+
+    .upload-area,
+    .progress-area,
+    .result-area,
+    .error-area {
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    .upload-icon { width: 50px; height: 50px; margin-bottom: 1rem; }
+    .upload-text h2 { font-size: 1.1em; }
+    .upload-text p { font-size: 0.9em; }
+
+     .btn { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+     .file-preview-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+     .file-info { align-self: flex-end;}
+
+     .link-container { flex-direction: column; box-shadow: none; border: 1px solid var(--border-color); }
+     .link-input { border-radius: var(--border-radius) var(--border-radius) 0 0; }
+     .btn-copy {
+         border-radius: 0 0 var(--border-radius) var(--border-radius);
+         width: 100%;
+         margin-left: 0;
+         justify-content: center; /* Center icon/text */
+     }
+    }
